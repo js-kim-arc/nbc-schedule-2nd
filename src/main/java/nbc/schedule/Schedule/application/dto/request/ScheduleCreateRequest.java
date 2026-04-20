@@ -4,12 +4,13 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import nbc.schedule.Schedule.domain.Schedule;
 
 @Getter
 @NoArgsConstructor
 public class ScheduleCreateRequest {
 
-    @NotBlank(message = "제목을 채워주세요!")
+    @NotBlank(message = "제목은 비어 있을 수 없습니다.")
     @Size(max = 100, message = "제목은 100자를 초과할 수 없습니다.")
     private String title;
 
@@ -23,4 +24,8 @@ public class ScheduleCreateRequest {
 
     @NotBlank(message = "비밀번호는 비어 있을 수 없습니다.")
     private String password;
+
+    public Schedule toSchedule() {
+        return Schedule.of(this.title, this.content, this.author, this.password);
+    }
 }

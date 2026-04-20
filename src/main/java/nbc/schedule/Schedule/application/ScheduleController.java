@@ -22,9 +22,6 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    // -----------------------------------------------------------------------
-    // POST /api/schedules — 일정 생성
-    // -----------------------------------------------------------------------
     @PostMapping
     public ResponseEntity<ScheduleResponse> create(
             @Valid @RequestBody ScheduleCreateRequest request) {
@@ -34,9 +31,6 @@ public class ScheduleController {
                 .body(scheduleService.create(request));
     }
 
-    // -----------------------------------------------------------------------
-    // GET /api/schedules — 일정 목록 페이징 조회
-    // -----------------------------------------------------------------------
     @GetMapping
     public ResponseEntity<Page<ScheduleResponse>> findAll(
             @RequestParam(required = false) String author,
@@ -46,9 +40,6 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.findAll(author, pageable));
     }
 
-    // -----------------------------------------------------------------------
-    // GET /api/schedules/{id} — 단건 일정 조회
-    // -----------------------------------------------------------------------
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleResponse> findById(
             @PathVariable Long id) {
@@ -56,21 +47,14 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.findById(id));
     }
 
-    // -----------------------------------------------------------------------
-    // PATCH /api/schedules/{id} — 일정 수정
-    // -----------------------------------------------------------------------
-
     @PatchMapping("/{id}")
     public ResponseEntity<ScheduleResponse> update(
             @PathVariable Long id,
             @Valid @RequestBody ScheduleUpdateRequest request) {
 
+        request.validate(); // ① @Valid 후 교차 검증 (DTO 책임, Service에 검증 노출 X)
         return ResponseEntity.ok(scheduleService.update(id, request));
     }
-
-    // -----------------------------------------------------------------------
-    // DELETE /api/schedules/{id} — 일정 삭제
-    // -----------------------------------------------------------------------
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(

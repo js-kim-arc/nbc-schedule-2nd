@@ -4,6 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import nbc.schedule.Schedule.domain.Schedule;
+import nbc.schedule.common.exception.BusinessException;
+import nbc.schedule.common.exception.ErrorCode;
 
 @Getter
 @NoArgsConstructor
@@ -18,4 +21,14 @@ public class ScheduleUpdateRequest {
 
     @NotBlank(message = "비밀번호는 필수입니다.")
     private String password;
+
+    public void validate() {
+        if (this.title == null && this.content == null) {
+            throw BusinessException.withDetail(ErrorCode.INVALID_INPUT, "수정할 필드가 없습니다.");
+        }
+    }
+
+    public void applyTo(Schedule schedule) {
+        schedule.update(this.title, this.content, this.password);
+    }
 }

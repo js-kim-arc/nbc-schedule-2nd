@@ -28,13 +28,7 @@ public class ScheduleService {
 
     @Transactional
     public ScheduleResponse create(ScheduleCreateRequest request) {
-        Schedule schedule = Schedule.of(
-                request.getTitle(),
-                request.getContent(),
-                request.getAuthor(),
-                request.getPassword()
-                                       );
-        return ScheduleResponse.from(scheduleRepository.save(schedule));
+        return ScheduleResponse.from(scheduleRepository.save(request.toSchedule()));
     }
 
     // -----------------------------------------------------------------------
@@ -49,9 +43,6 @@ public class ScheduleService {
         return page.map(ScheduleResponse::from);
     }
 
-    /**
-     * 단건 일정 조회.
-     */
     public ScheduleResponse findById(Long id) {
         return ScheduleResponse.from(getScheduleOrThrow(id));
     }
@@ -60,25 +51,16 @@ public class ScheduleService {
     // 수정
     // -----------------------------------------------------------------------
 
-    /**
-     * 일정 수정 (PATCH 시맨틱).
-     */
     @Transactional
     public ScheduleResponse update(Long id, ScheduleUpdateRequest request) {
-        if (request.getTitle() == null && request.getContent() == null) {
-            throw ScheduleDomainException.of(ErrorCode.INVALID_INPUT, "수정할 필드가 없습니다.");
-        }
-
         Schedule schedule = getScheduleOrThrow(id);
-        schedule.update(request.getTitle(), request.getContent(), request.getPassword());
-
+        request.applyTo(schedule); // dirty checking → @Transactional 종료 시 UPDATE 자동 실행
         return ScheduleResponse.from(schedule);
     }
 
     // -----------------------------------------------------------------------
     // 삭제
     // -----------------------------------------------------------------------
-
 
     @Transactional
     public void delete(Long id, String password) {
