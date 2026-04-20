@@ -1,0 +1,67 @@
+package nbc.schedule.Schedule.application;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import nbc.schedule.Schedule.application.dto.request.ScheduleCreateRequest;
+import nbc.schedule.Schedule.application.dto.request.ScheduleDeleteRequest;
+import nbc.schedule.Schedule.application.dto.request.ScheduleUpdateRequest;
+import nbc.schedule.Schedule.application.dto.response.ScheduleResponse;
+import nbc.schedule.Schedule.presentaion.ScheduleService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/schedules")
+@RequiredArgsConstructor
+public class ScheduleController {
+
+    private final ScheduleService scheduleService;
+
+    @PostMapping
+    public ResponseEntity<ScheduleResponse> create(
+            @Valid @RequestBody ScheduleCreateRequest request) {
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(scheduleService.create(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ScheduleResponse>> findAll(
+            @RequestParam(required = false) String author,
+            @PageableDefault(size = 10, sort = "updatedAt", direction = Sort.Direction.DESC)
+            Pageable pageable) {
+
+        return ResponseEntity.ok(scheduleService.findAll(author, pageable));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ScheduleResponse> findById(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(scheduleService.findById(id));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ScheduleResponse> update(
+            @PathVariable Long id,
+            @Valid @RequestBody ScheduleUpdateRequest request) {
+
+        request.validate(); // ① @Valid 후 교차 검증 (DTO 책임, Service에 검증 노출 X)
+        return ResponseEntity.ok(scheduleService.update(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(
+            @PathVariable Long id,
+            @Valid @RequestBody ScheduleDeleteRequest request) {
+
+        scheduleService.delete(id, request.getPassword());
+        return ResponseEntity.noContent().build();
+    }
+}
