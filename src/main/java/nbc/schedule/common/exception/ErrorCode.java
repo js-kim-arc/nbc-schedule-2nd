@@ -20,6 +20,15 @@ public enum ErrorCode {
     SCHEDULE_AUTHOR_BLANK    ("SCHEDULE005", "작성자는 비어 있을 수 없습니다.",      HttpStatus.BAD_REQUEST),
     SCHEDULE_PASSWORD_BLANK  ("SCHEDULE006", "비밀번호는 비어 있을 수 없습니다.",    HttpStatus.BAD_REQUEST),
 
+    // ─── User ─────────────────────────────────────────────────────────
+    USER_NOT_FOUND          ("USER001", "해당 유저를 찾을 수 없습니다.",           HttpStatus.NOT_FOUND),
+    USER_EMAIL_DUPLICATE    ("USER002", "이미 사용 중인 이메일입니다.",             HttpStatus.CONFLICT),
+    USER_USERNAME_BLANK     ("USER003", "유저명은 비어 있을 수 없습니다.",          HttpStatus.BAD_REQUEST),
+    USER_EMAIL_BLANK        ("USER004", "이메일은 비어 있을 수 없습니다.",          HttpStatus.BAD_REQUEST),
+    USER_PASSWORD_BLANK     ("USER005", "비밀번호는 비어 있을 수 없습니다.",        HttpStatus.BAD_REQUEST),
+    USER_PASSWORD_TOO_SHORT ("USER006", "비밀번호는 8자 이상이어야 합니다.",        HttpStatus.BAD_REQUEST),
+    USER_PASSWORD_MISMATCH  ("USER007", "비밀번호가 일치하지 않습니다.",            HttpStatus.FORBIDDEN),
+
     // ─── Comment ──────────────────────────────────────────────────────
     COMMENT_NOT_FOUND        ("COMMENT001", "해당 댓글을 찾을 수 없습니다.",                        HttpStatus.NOT_FOUND),
     COMMENT_PASSWORD_MISMATCH("COMMENT002", "비밀번호가 일치하지 않습니다.",                        HttpStatus.FORBIDDEN),
