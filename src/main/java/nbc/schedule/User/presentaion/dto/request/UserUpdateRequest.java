@@ -1,4 +1,4 @@
-package nbc.schedule.User.application.dto.request;
+package nbc.schedule.User.presentaion.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;

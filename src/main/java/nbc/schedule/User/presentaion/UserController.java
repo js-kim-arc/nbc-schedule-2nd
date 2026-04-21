@@ -1,11 +1,11 @@
-package nbc.schedule.User.application;
+package nbc.schedule.User.presentaion;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import nbc.schedule.User.application.dto.request.UserCreateRequest;
-import nbc.schedule.User.application.dto.request.UserUpdateRequest;
-import nbc.schedule.User.application.dto.response.UserResponse;
-import nbc.schedule.User.presentaion.UserService;
+import nbc.schedule.User.application.UserService;
+import nbc.schedule.User.presentaion.dto.request.UserCreateRequest;
+import nbc.schedule.User.presentaion.dto.request.UserUpdateRequest;
+import nbc.schedule.User.presentaion.dto.response.UserResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +61,7 @@ public class UserController {
             @PathVariable Long id,
             @Valid @RequestBody UserUpdateRequest request) {
 
-        request.validate(); // ① @Valid 후 교차 검증 (DTO 책임, Service에 검증 노출 X)
+        request.validate(); //
         return ResponseEntity.ok(userService.update(id, request));
     }
 

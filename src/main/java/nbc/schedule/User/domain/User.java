@@ -74,15 +74,6 @@ public class User {
         // updatedAt은 @LastModifiedDate가 dirty checking 시점에 자동 갱신
     }
 
-    /**
-     * 비밀번호 일치 여부 검증.
-     */
-    public void validatePassword(String rawPassword) {
-        if (!Objects.equals(this.password, rawPassword)) {
-            throw UserDomainException.of(ErrorCode.USER_PASSWORD_MISMATCH);
-        }
-    }
-
     // -----------------------------------------------------------------------
     // 불변식 검증 (private)
     // 도메인 규칙 위반은 모두 UserDomainException + ErrorCode 체계로 던진다.

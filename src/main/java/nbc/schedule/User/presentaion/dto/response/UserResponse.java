@@ -1,4 +1,4 @@
-package nbc.schedule.User.application.dto.response;
+package nbc.schedule.User.presentaion.dto.response;
 
 import lombok.Getter;
 import nbc.schedule.User.domain.User;

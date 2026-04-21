@@ -1,9 +1,9 @@
-package nbc.schedule.User.presentaion;
+package nbc.schedule.User.application;
 
 import lombok.RequiredArgsConstructor;
-import nbc.schedule.User.application.dto.request.UserCreateRequest;
-import nbc.schedule.User.application.dto.request.UserUpdateRequest;
-import nbc.schedule.User.application.dto.response.UserResponse;
+import nbc.schedule.User.presentaion.dto.request.UserCreateRequest;
+import nbc.schedule.User.presentaion.dto.request.UserUpdateRequest;
+import nbc.schedule.User.presentaion.dto.response.UserResponse;
 import nbc.schedule.User.domain.Exception.UserDomainException;
 import nbc.schedule.User.domain.User;
 import nbc.schedule.User.infrastructure.persistence.UserRepository;

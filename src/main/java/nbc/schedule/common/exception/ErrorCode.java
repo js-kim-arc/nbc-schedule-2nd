@@ -12,6 +12,10 @@ public enum ErrorCode {
     INVALID_INPUT("C001", "잘못된 입력 값입니다.",     HttpStatus.BAD_REQUEST),
     NOT_FOUND    ("C002", "데이터를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 
+    // ─── Auth ─────────────────────────────────────────────────────────
+    AUTH_INVALID_CREDENTIALS("AUTH001", "이메일 또는 비밀번호가 올바르지 않습니다.", HttpStatus.UNAUTHORIZED),
+    AUTH_REQUIRED           ("AUTH002", "로그인이 필요합니다.",                     HttpStatus.UNAUTHORIZED),
+
     // ─── Schedule ─────────────────────────────────────────────────────
     SCHEDULE_NOT_FOUND       ("SCHEDULE001", "해당 일정을 찾을 수 없습니다.",        HttpStatus.NOT_FOUND),
     SCHEDULE_PASSWORD_MISMATCH("SCHEDULE002", "비밀번호가 일치하지 않습니다.",       HttpStatus.FORBIDDEN),
