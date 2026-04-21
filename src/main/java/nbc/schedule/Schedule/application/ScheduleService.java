@@ -1,9 +1,9 @@
-package nbc.schedule.Schedule.presentaion;
+package nbc.schedule.Schedule.application;
 
 import lombok.RequiredArgsConstructor;
-import nbc.schedule.Schedule.application.dto.request.ScheduleCreateRequest;
-import nbc.schedule.Schedule.application.dto.request.ScheduleUpdateRequest;
-import nbc.schedule.Schedule.application.dto.response.ScheduleResponse;
+import nbc.schedule.Schedule.presentaion.dto.request.ScheduleCreateRequest;
+import nbc.schedule.Schedule.presentaion.dto.request.ScheduleUpdateRequest;
+import nbc.schedule.Schedule.presentaion.dto.response.ScheduleResponse;
 import nbc.schedule.Schedule.domain.Exception.ScheduleDomainException;
 import nbc.schedule.Schedule.domain.Schedule;
 import nbc.schedule.Schedule.infrastructure.persistence.ScheduleRepository;

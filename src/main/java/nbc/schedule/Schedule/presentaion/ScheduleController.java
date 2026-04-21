@@ -1,12 +1,12 @@
-package nbc.schedule.Schedule.application;
+package nbc.schedule.Schedule.presentaion;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import nbc.schedule.Schedule.application.dto.request.ScheduleCreateRequest;
-import nbc.schedule.Schedule.application.dto.request.ScheduleDeleteRequest;
-import nbc.schedule.Schedule.application.dto.request.ScheduleUpdateRequest;
-import nbc.schedule.Schedule.application.dto.response.ScheduleResponse;
-import nbc.schedule.Schedule.presentaion.ScheduleService;
+import nbc.schedule.Schedule.application.ScheduleService;
+import nbc.schedule.Schedule.presentaion.dto.request.ScheduleCreateRequest;
+import nbc.schedule.Schedule.presentaion.dto.request.ScheduleDeleteRequest;
+import nbc.schedule.Schedule.presentaion.dto.request.ScheduleUpdateRequest;
+import nbc.schedule.Schedule.presentaion.dto.response.ScheduleResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

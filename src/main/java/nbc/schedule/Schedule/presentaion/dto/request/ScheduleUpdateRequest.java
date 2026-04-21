@@ -1,4 +1,4 @@
-package nbc.schedule.Schedule.application.dto.request;
+package nbc.schedule.Schedule.presentaion.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
