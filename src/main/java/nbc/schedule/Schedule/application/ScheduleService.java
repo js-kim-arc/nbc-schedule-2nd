@@ -7,6 +7,9 @@ import nbc.schedule.Schedule.presentaion.dto.response.ScheduleResponse;
 import nbc.schedule.Schedule.domain.Exception.ScheduleDomainException;
 import nbc.schedule.Schedule.domain.Schedule;
 import nbc.schedule.Schedule.infrastructure.persistence.ScheduleRepository;
+import nbc.schedule.User.domain.Exception.UserDomainException;
+import nbc.schedule.User.domain.User;
+import nbc.schedule.User.infrastructure.persistence.UserRepository;
 import nbc.schedule.common.exception.ErrorCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final UserRepository     userRepository;
 
     // -----------------------------------------------------------------------
     // 생성
@@ -28,16 +32,17 @@ public class ScheduleService {
 
     @Transactional
     public ScheduleResponse create(ScheduleCreateRequest request) {
-        return ScheduleResponse.from(scheduleRepository.save(request.toSchedule()));
+        User user = getUserOrThrow(request.getUserId());
+        return ScheduleResponse.from(scheduleRepository.save(request.toSchedule(user)));
     }
 
     // -----------------------------------------------------------------------
     // 조회
     // -----------------------------------------------------------------------
 
-    public Page<ScheduleResponse> findAll(String author, Pageable pageable) {
-        Page<Schedule> page = (author != null && !author.isBlank())
-                ? scheduleRepository.findByAuthor(author, pageable)
+    public Page<ScheduleResponse> findAll(Long userId, Pageable pageable) {
+        Page<Schedule> page = (userId != null)
+                ? scheduleRepository.findByUserId(userId, pageable)
                 : scheduleRepository.findAll(pageable);
 
         return page.map(ScheduleResponse::from);
@@ -54,7 +59,7 @@ public class ScheduleService {
     @Transactional
     public ScheduleResponse update(Long id, ScheduleUpdateRequest request) {
         Schedule schedule = getScheduleOrThrow(id);
-        request.applyTo(schedule); // dirty checking → @Transactional 종료 시 UPDATE 자동 실행
+        request.applyTo(schedule);
         return ScheduleResponse.from(schedule);
     }
 
@@ -77,5 +82,11 @@ public class ScheduleService {
         return scheduleRepository.findById(id)
                                  .orElseThrow(() -> ScheduleDomainException.of(
                                          ErrorCode.SCHEDULE_NOT_FOUND, "id=" + id));
+    }
+
+    private User getUserOrThrow(Long userId) {
+        return userRepository.findById(userId)
+                             .orElseThrow(() -> UserDomainException.of(
+                                     ErrorCode.USER_NOT_FOUND, "id=" + userId));
     }
 }
