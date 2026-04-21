@@ -17,7 +17,7 @@ import java.util.Objects;
 @Table(name = "user")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // JPA 프록시용. 외부 기본 생성 차단
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
 
     @Id
@@ -45,18 +45,18 @@ public class User {
     // 생성
     // -----------------------------------------------------------------------
 
-    private User(String username, String email, String password) {
+    private User(String username, String email, String encodedPassword) {
         validateUsername(username);
         validateEmail(email);
-        validatePassword(password);
+        validateStoredPassword(encodedPassword);
 
         this.username = username;
         this.email    = email;
-        this.password = password;
+        this.password = encodedPassword;
     }
 
-    public static User of(String username, String email, String password) {
-        return new User(username, email, password);
+    public static User of(String username, String email, String encodedPassword) {
+        return new User(username, email, encodedPassword);
     }
 
     // -----------------------------------------------------------------------
@@ -71,12 +71,11 @@ public class User {
             validateEmail(email);
             this.email = email;
         }
-        // updatedAt은 @LastModifiedDate가 dirty checking 시점에 자동 갱신
+        // updatedAt 은 @LastModifiedDate 가 dirty checking 시점에 자동 갱신
     }
 
     // -----------------------------------------------------------------------
     // 불변식 검증 (private)
-    // 도메인 규칙 위반은 모두 UserDomainException + ErrorCode 체계로 던진다.
     // -----------------------------------------------------------------------
 
     private static void validateUsername(String username) {
@@ -94,12 +93,9 @@ public class User {
         }
     }
 
-    private static void validatePassword(String password) {
+    private static void validateStoredPassword(String password) {
         if (password == null || password.isBlank()) {
             throw UserDomainException.of(ErrorCode.USER_PASSWORD_BLANK);
-        }
-        if (password.length() < 8) {
-            throw UserDomainException.of(ErrorCode.USER_PASSWORD_TOO_SHORT);
         }
     }
 }

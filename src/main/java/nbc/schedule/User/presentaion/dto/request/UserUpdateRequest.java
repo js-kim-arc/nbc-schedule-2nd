@@ -24,11 +24,15 @@ public class UserUpdateRequest {
         }
     }
 
+    public boolean hasEmailChange() {
+        return this.email != null;
+    }
+
     public void applyTo(User user) {
         user.update(this.username, this.email);
     }
 
-    /** 이메일 중복 확인용 — email이 변경 요청에 포함된 경우에만 Service가 중복 체크 */
+    /** 이메일 중복 확인용 — hasEmailChange() 가 true 일 때만 Service 가 호출한다 */
     public String getEmail() {
         return this.email;
     }

@@ -23,6 +23,7 @@ public class AuthService {
 
     public LoginResponse login(LoginRequest request, HttpSession session) {
         // 1. 이메일로 유저 조회 — 없으면 즉시 동일한 401
+        // 과제 피드백 반영 - 이메일을 찾을 때 user리포지토리가 dto 내부에서 의존하게 됨 - userService 참고
         User user = userRepository.findByEmail(request.getEmail())
                                   .orElseThrow(() -> AuthDomainException.of(
                                           ErrorCode.AUTH_INVALID_CREDENTIALS));

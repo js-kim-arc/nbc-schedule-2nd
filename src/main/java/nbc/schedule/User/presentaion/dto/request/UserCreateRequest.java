@@ -23,12 +23,15 @@ public class UserCreateRequest {
     @Size(min = 8, message = "비밀번호는 8자 이상이어야 합니다.")
     private String password;
 
-    public User toUser() {
-        return User.of(this.username, this.email, this.password);
+    public User toUser(String encodedPassword) {
+        return User.of(this.username, this.email, encodedPassword);
     }
 
-    /** 이메일 중복 확인용 — Service가 email 값만 필요할 때 사용 */
     public String getEmail() {
         return this.email;
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 }
