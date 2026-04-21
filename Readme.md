@@ -1,5 +1,5 @@
 ![ERD](https://github.com/js-kim-arc/nbc-schedule-2nd/blob/main/%EC%8A%A4%EC%BC%80%EC%A5%B41.png?raw=true)
-
+- 스케쥴 erd 다이어그램 
 <details>
 <summary>📋 Schedule Management API 명세서</summary>
 
