@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    Page<Schedule> findByAuthor(String author, Pageable pageable);
+    Page<Schedule> findByUserId(Long userId, Pageable pageable);
 }
 

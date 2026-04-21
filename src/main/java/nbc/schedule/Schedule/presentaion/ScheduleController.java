@@ -33,11 +33,11 @@ public class ScheduleController {
 
     @GetMapping
     public ResponseEntity<Page<ScheduleResponse>> findAll(
-            @RequestParam(required = false) String author,
+            @RequestParam(required = false) Long userId, // author → userId 전환
             @PageableDefault(size = 10, sort = "updatedAt", direction = Sort.Direction.DESC)
             Pageable pageable) {
 
-        return ResponseEntity.ok(scheduleService.findAll(author, pageable));
+        return ResponseEntity.ok(scheduleService.findAll(userId, pageable));
     }
 
     @GetMapping("/{id}")
@@ -52,7 +52,7 @@ public class ScheduleController {
             @PathVariable Long id,
             @Valid @RequestBody ScheduleUpdateRequest request) {
 
-        request.validate(); // ① @Valid 후 교차 검증 (DTO 책임, Service에 검증 노출 X)
+        request.validate();
         return ResponseEntity.ok(scheduleService.update(id, request));
     }
 
